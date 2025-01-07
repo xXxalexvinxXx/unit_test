@@ -121,6 +121,7 @@ class BookServiceTest {
         // Verify
         verify(bookRepository, never()).findById(anyString());
     }
+    
 
     @Test
     void testFindAllBooks_NullRepositoryResponse() {
