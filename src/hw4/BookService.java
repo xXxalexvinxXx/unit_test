@@ -9,12 +9,17 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book findBookById(String id) {
+    public Book findBookById(String id)
+    {
+        if (id == null || id.trim().isEmpty()){
+            return null;
+        }
         return bookRepository.findById(id);
     }
 
     public List<Book> findAllBooks() {
-        return bookRepository.findAll();
+        List<Book> books = bookRepository.findAll();
+        return books != null ? books : List.of();
     }
 }
 

@@ -98,4 +98,43 @@ class BookServiceTest {
         // Verify
         verify(bookRepository, times(1)).findAll();
     }
+    @Test
+    void testFindBookById_NullId() {
+        // Act
+        Book result = bookService.findBookById(null);
+
+        // Assert
+        assertNull(result, "Ожидается, что метод вернет null при передаче null в качестве ID");
+
+        // Verify
+        verify(bookRepository, never()).findById(anyString());
+    }
+
+    @Test
+    void testFindBookById_EmptyId() {
+        // Act
+        Book result = bookService.findBookById("");
+
+        // Assert
+        assertNull(result, "Ожидается, что метод вернет null при передаче пустой строки в качестве ID");
+
+        // Verify
+        verify(bookRepository, never()).findById(anyString());
+    }
+
+    @Test
+    void testFindAllBooks_NullRepositoryResponse() {
+        // Arrange
+        when(bookRepository.findAll()).thenReturn(null);
+
+        // Act
+        List<Book> result = bookService.findAllBooks();
+
+        // Assert
+        assertNotNull(result, "Ожидается, что метод вернет пустой список вместо null");
+        assertTrue(result.isEmpty(), "Ожидается, что список будет пустым при null-ответе репозитория");
+
+        // Verify
+        verify(bookRepository, times(1)).findAll();
+    }
 }
